@@ -16,6 +16,7 @@
 		echo $this->Form->input('id', array('class' => 'input', 'label' => array('class' => 'label'), 'div' => 'button-height inline-label'));
 		echo $this->Form->input('dsc', array('class' => 'input', 'label' => array('class' => 'label'), 'div' => 'button-height inline-label'));
 		echo $this->Form->input('value', array('class' => 'input', 'label' => array('class' => 'label'), 'div' => 'button-height inline-label'));
+		echo $this->Form->input('active', array('type'=>'checkbox', 'class' => 'input', 'label' => array('class' => 'label'), 'div' => 'button-height inline-label'));
 	?>
    
 	</fieldset>

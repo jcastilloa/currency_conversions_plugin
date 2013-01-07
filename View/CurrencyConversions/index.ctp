@@ -22,7 +22,7 @@
 			<th scope="col" class="header"><?php echo $this->Paginator->sort('id'); ?></th>
 			<th scope="col" class="header"><?php echo $this->Paginator->sort('dsc'); ?></th>
 			<th scope="col" class="header"><?php echo $this->Paginator->sort('value'); ?></th>
-			<th scope="col" class="header"><?php echo $this->Paginator->sort('created'); ?></th>
+			<th scope="col" class="header"><?php echo $this->Paginator->sort('active'); ?></th>
 			<th scope="col" class="header"><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions header"></th>
 	</tr>
@@ -42,7 +42,7 @@
 		<td><?php echo h($currencyConversion['CurrencyConversion']['id']); ?>&nbsp;</td>
 		<td><?php echo h($currencyConversion['CurrencyConversion']['dsc']); ?>&nbsp;</td>
 		<td><?php echo h($currencyConversion['CurrencyConversion']['value']); ?>&nbsp;</td>
-		<td><?php echo h($currencyConversion['CurrencyConversion']['created']); ?>&nbsp;</td>
+		<td><?php if($currencyConversion['CurrencyConversion']['active']==1) { echo __('Active'); } ?>&nbsp;</td>
 		<td><?php echo h($currencyConversion['CurrencyConversion']['modified']); ?>&nbsp;</td>
 		<td class="actions">
 		<span class="button-group compact">
