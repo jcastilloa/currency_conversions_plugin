@@ -13,26 +13,22 @@ class CurrencyConversionsController extends CurrencyConversionsAppController {
 	public $uses = array('CurrencyConversions.CurrencyConversion');     
         
         
-        public function refreshData() {
-            if ($this->request->is('post')) {
-		throw new MethodNotAllowedException();
-            }                
+        public function refreshData() {          
                 
             try {
                 
-                $dataSource = $this->getDataSource();
+				$this->loadModel("CurrencyConversion");
+				
+                $dataSource = $this->CurrencyConversion->getDataSource();
                 $dataSource->begin();             
 		
-		$xmlString = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
-		$xmlArray = Xml::toArray(Xml::build($xmlString));				
-		$monedas =  $xmlArray['Envelope']['Cube']['Cube']['Cube'];	
-		
-                $this->loadModel("CurrencyConversion");
-		//$this->CurrencyConversion->deleteAll(array('1 = 1'), false);
-		
-                
-                debug($monedas);                
-                
+				$xmlString = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
+				$xmlArray = Xml::toArray(Xml::build($xmlString));				
+				$monedas =  $xmlArray['Envelope']['Cube']['Cube']['Cube'];
+             
+         
+		$monedas[] = array('@currency'=>'EUR', '@rate' => '1' );
+		       
 		foreach ($monedas as $linea_array) {	
                     
                         $o = $this->CurrencyConversion->find('first', array('conditions' => array('CurrencyConversion.dsc' => $linea_array['@currency'])));					
@@ -48,12 +44,7 @@ class CurrencyConversionsController extends CurrencyConversionsAppController {
 			
 		}
 		
-		$this->CurrencyConversion->create();			
-		$this->CurrencyConversion->set('dsc', 'EUR');
-		$this->CurrencyConversion->set('value', 1);
-		$this->CurrencyConversion->save();
-                
-                $dataSource->commit();
+            $dataSource->commit();
                 
             } catch (Exception $e) {                    
                      $dataSource->rollback();
@@ -90,15 +81,16 @@ class CurrencyConversionsController extends CurrencyConversionsAppController {
           
         if (isset($this->params['data']['submit'])) {
             
-            if (!empty($this->params['data']['Index']['dsc'])) {
-			$txtdsc = Sanitize::paranoid($this->params['data']['Index']['dsc']);
-			$conditions[] = array('CurrencyConversion.dsc LIKE' => '%'.$txtdsc.'%');
-			}
-			
 			if (!empty($this->params['data']['Basica']['dsc'])) {
 			$txtdsc = Sanitize::paranoid($this->params['data']['Basica']['dsc']);
 			$conditions[] = array('CurrencyConversion.dsc LIKE' => '%'.$txtdsc.'%');
 			}
+			
+		} elseif (isset($this->params['data']['actualizar'])) {
+			
+			$this->refreshData();
+			$this->Session->setFlash(__('Data has been updated sucesfull'));			
+			
 		}
 		
 	/*	$xmlString = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';

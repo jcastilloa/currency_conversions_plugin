@@ -19,8 +19,8 @@
    
 	</fieldset>
 <div class="wrapped button-height">
-<?php echo $this->Form->submit(__('Guardar'), array('class' => 'button green-gradient', 'div'=>false, 'name'=>'submit'));
-echo $this->Form->submit(__('Cancelar'), array('class' => 'button orange-gradient float-right','div'=>false, 'name'=>'cancel'));
+<?php echo $this->Form->submit(__('Guardar'), array('class' => 'button silver-gradient', 'div'=>false, 'name'=>'submit'));
+echo $this->Form->submit(__('Cancelar'), array('class' => 'button silver-gradient float-right','div'=>false, 'name'=>'cancel'));
 echo $this->Form->end();?>
 </div>
 </div>
