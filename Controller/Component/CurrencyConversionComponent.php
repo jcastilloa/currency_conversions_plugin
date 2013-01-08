@@ -17,16 +17,20 @@ class CurrencyConversionComponent extends Component {
      private $c;
      
      function __construct() {
-         $this->c = new CurrencyConversionsController;
+     	$this->c = new CurrencyConversionsController;
      }
     
      public function refreshData() {        
-         $this->c->refreshData();        
+     	$this->c->refreshData();        
      }
      
      public function currencyExchange($origin, $destination, $value) {        
-         return $this->c->currencyExchange($origin, $destination, $value);
-     }    
+     	return $this->c->currencyExchange($origin, $destination, $value);
+     }  
+	 
+	 public function currencyExchangeId($origin, $destination, $value) {
+	 	return $this->c->currencyExchangeId($origin, $destination, $value);
+	 }	  
    
 }
 

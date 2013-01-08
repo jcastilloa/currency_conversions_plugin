@@ -53,7 +53,7 @@ class CurrencyConversionsController extends CurrencyConversionsAppController {
 	}
         
         
-        public function currencyExchange($origin, $destination, $value) {	
+    public function currencyExchange($origin, $destination, $value) {	
 		$this->loadModel("CurrencyConversion");
                 $o = $this->CurrencyConversion->find('first', array('conditions' => array('CurrencyConversion.dsc' => $origin)));		
 		$d = $this->CurrencyConversion->find('first', array('conditions' => array('CurrencyConversion.dsc' => $destination)));
@@ -62,6 +62,26 @@ class CurrencyConversionsController extends CurrencyConversionsAppController {
 			$eur_o = round(($value / $o['CurrencyConversion']['value']),2);
 			//convert to destination		
 			$dest =  round(($eur_o * $d['CurrencyConversion']['value']),2);			
+			return $dest;
+		} else {
+			return null;
+		}
+		
+	}
+			
+	public function currencyExchangeId($origin, $destination, $value) {	
+		$this->loadModel("CurrencyConversion");
+		
+		$this->CurrencyConversion->id = $origin;
+		$o_value = $this->CurrencyConversion->field("value");
+		$this->CurrencyConversion->id = $destination;
+		$d_value = $this->CurrencyConversion->field("value");
+		
+     	//convert origin to euro		
+		if (isset($o_value)) {
+			$eur_o = round(($value / $o_value),2);
+			//convert to destination		
+			$dest =  round(($eur_o * $d_value),2);			
 			return $dest;
 		} else {
 			return null;
