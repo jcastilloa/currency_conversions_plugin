@@ -30,7 +30,11 @@ class CurrencyConversionComponent extends Component {
 	 
 	 public function currencyExchangeId($origin, $destination, $value) {
 	 	return $this->c->currencyExchangeId($origin, $destination, $value);
-	 }	  
+	 }
+
+     public function getActivas() {
+         return $this->c->getActivas();
+     }
    
 }
 

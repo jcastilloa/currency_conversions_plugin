@@ -232,6 +232,19 @@ class CurrencyConversionsController extends CurrencyConversionsAppController {
 	
 	}
 
+
+    /**
+     * Obtiene las divisas activas
+     */
+    public function getActivas() {
+
+        $divisas = $this->CurrencyConversion->find('list',
+            array('conditions'=>array('active'=> 1)));
+
+        return $divisas;
+
+    }
+
 /**
  * delete method
  *
